@@ -3,7 +3,7 @@ services:
   kafka1:
     image: bitnami/kafka:3.2.3
     ports:
-      - 2181:2181
+  #    - 2181:2181 #not use zookeeper
       - 9092:9092
     environment:
       - KAFKA_ENABLE_KRAFT=yes
