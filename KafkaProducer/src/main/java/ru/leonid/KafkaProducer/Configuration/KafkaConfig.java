@@ -20,6 +20,8 @@ public class KafkaConfig {
         Properties kaProperties = new Properties();
         kaProperties.put("bootstrap.servers",
                 "localhost:9092,localhost:9093,localhost:9094");
+        kaProperties.put("acks", "all"); //макс. надежность. Ждем подтверждения записи всех копий
+        kaProperties.put("retries", "3"); // 3 попытки повторной отправки при сбое
         kaProperties.put("key.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
         kaProperties.put("value.serializer",
@@ -32,4 +34,22 @@ public class KafkaConfig {
         configKafka();
         return producer;
     }
+
+    /*
+	@Value(value = "${spring.kafka.bootstrap-servers}")
+	private String bootstrapAddress;
+
+	//KafkaAdminотвечает за создание новых тем в нашем брокере. В spring boot создается автоматически
+	@Bean
+	public KafkaAdmin kafkaAdmin(){
+		Map<String, Object> configs = new HashMap<>();
+		configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+		return new KafkaAdmin(configs);
+	}
+	@Bean
+	public NewTopic topic2(){
+		return new NewTopic("SPRING.TEST.TOPIC2", 1,(short) 1);
+	}
+	*/
+
 }

@@ -1,6 +1,6 @@
 version: '3'
 services:
-  kafka1:
+  kafkaBroker1:
     image: bitnami/kafka:3.2.3
     ports:
   #    - 2181:2181 #not use zookeeper
@@ -13,6 +13,6 @@ services:
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
       - KAFKA_CFG_BROKER_ID=1
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka1:9093
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafkaBroker1:9093
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_KRAFT_CLUSTER_ID=r4zt_wrqTRuT7W2NJsB_GA
