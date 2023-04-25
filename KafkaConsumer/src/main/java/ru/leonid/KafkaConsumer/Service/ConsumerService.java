@@ -1,12 +1,11 @@
 package ru.leonid.KafkaConsumer.Service;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 import java.util.List;
@@ -19,7 +18,7 @@ public class ConsumerService {
 
     @Value("${spring.kafka.template.default-topic}")
     String topic;
-
+/*
     @Scheduled(initialDelay = 5000L, fixedDelay = 20000L)
     private void consumeTo(){
 
@@ -34,5 +33,14 @@ public class ConsumerService {
                         " value = " + record.value());
             }
         }
+    }
+*/
+    public Flux<String> getCurrentMessages(){
+        kafkaConsumer.subscribe(List.of(topic));
+        ConsumerRecords<String, String> records =
+                kafkaConsumer.poll(Duration.ofMillis(100));
+        Flux<String> flux;
+        return Flux.fromIterable(records).delayElements(Duration.ofMillis(100))
+                .map((record) -> "msg = " + record.value()+ " time = " + record.timestamp() + " offset = " + record.offset());
     }
 }
