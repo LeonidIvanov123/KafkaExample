@@ -23,7 +23,7 @@ public class KafkaConsumerController {
     @GetMapping("/data")
     public String publishToThumeleaf(Model model){
         IReactiveDataDriverContextVariable reactiveDataDriverContextVariable =
-                new ReactiveDataDriverContextVariable(consumerService.getCurrentMessages());
+                new ReactiveDataDriverContextVariable(consumerService.getCurrentMessages(), 15);
         model.addAttribute("messagesfromprod", reactiveDataDriverContextVariable);
         return "data";
     }

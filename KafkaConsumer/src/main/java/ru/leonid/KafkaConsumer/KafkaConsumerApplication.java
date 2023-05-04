@@ -11,6 +11,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class KafkaConsumerApplication {
 
 	public static void main(String[] args) {
+
+		//System.getProperties().put("server.port", 8085);
+
 		SpringApplication.run(KafkaConsumerApplication.class, args);
 	}
 
