@@ -19,7 +19,7 @@ public class KafkaConfig {
     private void configKafka() {
         Properties kaProperties = new Properties();
         kaProperties.put("bootstrap.servers",
-                "localhost:9092,localhost:9093,localhost:9094");
+                bootstrapServers);
         kaProperties.put("acks", "all"); //макс. надежность. Ждем подтверждения записи всех копий
         kaProperties.put("retries", "3"); // 3 попытки повторной отправки при сбое
         kaProperties.put("key.serializer",
