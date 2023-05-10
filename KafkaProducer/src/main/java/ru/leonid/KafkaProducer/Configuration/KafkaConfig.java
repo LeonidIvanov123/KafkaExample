@@ -20,8 +20,8 @@ public class KafkaConfig {
         Properties kaProperties = new Properties();
         kaProperties.put("bootstrap.servers",
                 bootstrapServers);
-        kaProperties.put("acks", "all"); //макс. надежность. Ждем подтверждения записи всех копий
-        kaProperties.put("retries", "3"); // 3 попытки повторной отправки при сбое
+       // kaProperties.put("acks", "all"); //макс. надежность. Ждем подтверждения записи всех копий
+       // kaProperties.put("retries", "3"); // 3 попытки повторной отправки при сбое
         kaProperties.put("key.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
         kaProperties.put("value.serializer",

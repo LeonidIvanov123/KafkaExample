@@ -20,17 +20,18 @@ public class ProducerService {
     @Value("${spring.kafka.template.default-topic}")
     private String topic;
 
-    @Scheduled(initialDelay = 10000L, fixedDelay = 7000L)
+    @Scheduled(initialDelay = 10000L, fixedDelay = 3000L)
     private void messageSender() throws ExecutionException, InterruptedException {
         String msg = "privet from sender at " + (new Date().toString());
         ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, null, msg);
+        /*
         RecordMetadata recordMetadata =
         kafkaProducer.send(producerRecord).get(); //ждем ответа после отправки в топик
         System.out.println("send message: " + msg + "\n offset = "+ recordMetadata.offset() + " topic = " + recordMetadata.topic() + " timestamp = " + recordMetadata.timestamp() + "\n");
-        /*
+        */
         kafkaProducer.send(producerRecord);
         System.out.println("send message " + msg);
-         */
+
 
     }
 

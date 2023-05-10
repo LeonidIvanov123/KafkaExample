@@ -20,7 +20,7 @@ public class ConsumerService {
 
     @Value("${spring.kafka.template.default-topic}")
     String topic;
-
+    /*
     @Scheduled(initialDelay = 5000L, fixedDelay = 20000L)
     private void consumeTo(){
 
@@ -37,11 +37,13 @@ public class ConsumerService {
         }
     }
 
+     */
+
 
     public Flux<String> getCurrentMessages(){
         kafkaConsumer.subscribe(List.of(topic));
         ConsumerRecords<String, String> records =
-                kafkaConsumer.poll(Duration.ofMillis(100));
+                kafkaConsumer.poll(Duration.ofMillis(500));
         return Flux.fromIterable(records).delayElements(Duration.ofMillis(200))
                 .map((record) -> "msg = " + record.value()+ " time = " + record.timestamp() + " offset = " + record.offset());
     }
