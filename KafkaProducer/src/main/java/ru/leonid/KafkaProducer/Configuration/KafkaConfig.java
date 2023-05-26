@@ -1,5 +1,6 @@
 package ru.leonid.KafkaProducer.Configuration;
 
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +21,8 @@ public class KafkaConfig {
         Properties kaProperties = new Properties();
         kaProperties.put("bootstrap.servers",
                 bootstrapServers);
-       // kaProperties.put("acks", "all"); //макс. надежность. Ждем подтверждения записи всех копий
-       // kaProperties.put("retries", "3"); // 3 попытки повторной отправки при сбое
+        kaProperties.put("acks", "all"); //макс. надежность. Ждем подтверждения записи всех копий
+        kaProperties.put("retries", "3"); // 3 попытки повторной отправки при сбое
         kaProperties.put("key.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
         kaProperties.put("value.serializer",
@@ -48,8 +49,8 @@ public class KafkaConfig {
 	}
 	@Bean
 	public NewTopic topic2(){
-		return new NewTopic("SPRING.TEST.TOPIC2", 1,(short) 1);
+		return new NewTopic("SPRING.TEST.TOPIC2", 2,(short) 2);
 	}
-	*/
+    */
 
 }

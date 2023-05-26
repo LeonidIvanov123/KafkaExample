@@ -5,6 +5,8 @@ services:
     ports:
       - 9092:9092
       - 9093:9093
+    networks:
+      - kafkanetwork
     environment:
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
@@ -18,11 +20,15 @@ services:
       - KAFKA_KRAFT_CLUSTER_ID=r4zt_wrqTRuT7W2NJsB_GA
       - KAFKA_CFG_NUM_PARTITIONS=3
       - KAFKA_CFG_KRAFT_REPLICATION_FACTOR=3
+    restart: always
+
   kafkaBroker2:
     image: bitnami/kafka:3.2.3
     ports:
         - 19092:9092
         - 19093:9093
+    networks:
+      - kafkanetwork
     environment:
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
@@ -36,12 +42,15 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafkaBroker1:9093, 2@kafkaBroker2:9093, 3@kafkaBroker3:9093
       - KAFKA_CFG_NUM_PARTITIONS=3
       - KAFKA_CFG_KRAFT_REPLICATION_FACTOR=3
+    restart: always
 
   kafkaBroker3:
     image: bitnami/kafka:3.2.3
     ports:
       - 29092:9092
       - 29093:9093
+    networks:
+      - kafkanetwork
     environment:
       - KAFKA_ENABLE_KRAFT=yes
       - ALLOW_PLAINTEXT_LISTENER=yes
@@ -55,3 +64,10 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafkaBroker1:9093, 2@kafkaBroker2:9093, 3@kafkaBroker3:9093
       - KAFKA_CFG_NUM_PARTITIONS=3
       - KAFKA_CFG_KRAFT_REPLICATION_FACTOR=3
+    restart: always
+
+networks:
+  kafkanetwork:
+    driver: bridge
+
+    #https://github.com/OneCricketeer/apache-kafka-connect-docker/blob/master/docker-compose.yml#L65-L69
